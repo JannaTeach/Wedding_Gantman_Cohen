@@ -195,15 +195,18 @@
 
   <script>
     // **********************************************
-    // חובה: להדביק כאן את הקישור הארוך משלב 1
+    // שימי כאן את הקישור החדש מגוגל (אחרי שעשית New Deployment)
     // **********************************************
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxKbKMTecE7_w97xlLNrf0jdakgnivKQsHOsEiMlaJmQO1EG7KgYU31CzOEI7tXrz98/exec';
 
     let isOpen = false;
 
     function navigate() {
+        // מנסה לפתוח אפליקציה
         const wazeAppUrl = "waze://?q=Caesar+Yam+Caesarea&navigate=yes";
+        // גיבוי לדפדפן
         const wazeWebUrl = "https://waze.com/ul?q=Caesar+Yam+Caesarea&navigate=yes";
+        
         setTimeout(function () { window.location = wazeWebUrl; }, 1000);
         window.location = wazeAppUrl;
     }
@@ -236,23 +239,33 @@
     }
 
     const form = document.forms['rsvpForm'];
+    
     form.addEventListener('submit', e => {
       e.preventDefault();
-      document.getElementById('rsvpForm').classList.add('hidden');
+      
+      // החלפת כפתור השליחה באנימציית טעינה
+      document.getElementById('submitBtn').classList.add('hidden');
       document.getElementById('loading').classList.remove('hidden');
       
-      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-        .then(response => {
-            document.getElementById('loading').classList.add('hidden');
-            document.getElementById('successMessage').classList.remove('hidden');
-        })
-        .catch(error => {
-            // גם אם יש שגיאת CORS, זה בדרך כלל אומר שהנתונים עברו
-            console.log('Success (cors mode)', error);
-            document.getElementById('loading').classList.add('hidden');
-            document.getElementById('successMessage').classList.remove('hidden');
-        });
+      // שליחה לגוגל במצב no-cors (עוקף חסימות דפדפן)
+      fetch(scriptURL, { 
+          method: 'POST', 
+          body: new FormData(form),
+          mode: 'no-cors' // <--- זה התיקון הקריטי!
+      })
+      .then(() => {
+          // בגלל no-cors אנחנו מניחים שהשליחה הצליחה
+          document.getElementById('loading').classList.add('hidden');
+          document.getElementById('rsvpForm').classList.add('hidden'); // מסתיר את הטופס
+          document.getElementById('successMessage').classList.remove('hidden'); // מציג תודה
+      })
+      .catch(error => {
+          console.error('Error!', error.message);
+          alert('הייתה בעיה בשליחה, נסו שוב או שלחו הודעה לאגם/יאנה');
+          document.getElementById('loading').classList.add('hidden');
+          document.getElementById('submitBtn').classList.remove('hidden');
+      });
     });
-  </script>
+  </script> 
  </body>
 </html>
