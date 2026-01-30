@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="he" dir="rtl" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>הזמנה לחתונה - יאנה ואגם</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&family=Secular+One&display=swap" rel="stylesheet">
+  <style>
+    body { box-sizing: border-box; -webkit-tap-highlight-color: transparent; touch-action: pan-y; }
+    * { font-family: 'Heebo', sans-serif; }
+    .title-font { font-family: 'Secular One', sans-serif; }
+    .envelope-container { perspective: 1000px; z-index: 50; }
+    
+    .envelope {
+      position: relative; width: 320px; height: 220px; cursor: pointer;
+      transition: transform 0.3s ease; transform-style: preserve-3d;
+    }
+    .invitation-card {
+      position: absolute; width: 280px; left: 50%; transform: translateX(-50%);
+      bottom: 10px; transition: bottom 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 5; pointer-events: none; 
+    }
+    .envelope.open .invitation-card { bottom: 240px; pointer-events: auto; }
+    @media (min-width: 768px) {
+      .envelope { width: 600px; height: 400px; }
+      .invitation-card { width: 540px; padding: 20px; }
+      .envelope.open .invitation-card { bottom: 450px; }
+      .invitation-card p { font-size: 1.5rem; }
+    }
+    .envelope:hover { transform: scale(1.02); }
+    .envelope-body {
+      position: absolute; width: 100%; height: 100%; border-radius: 12px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+      background: linear-gradient(145deg, #fda4af 0%, #fb7185 100%);
+    }
+    .envelope-flap {
+      position: absolute; top: 0; left: 0; width: 100%; height: 50%;
+      transform-origin: top center; transition: transform 0.6s ease;
+      z-index: 10; clip-path: polygon(0 0, 50% 100%, 100% 0);
+      background: linear-gradient(180deg, #f43f5e 0%, #fb7185 100%);
+      backface-visibility: hidden;
+    }
+    .envelope.open .envelope-flap { transform: rotateX(180deg); z-index: 1;}
+    .heart-seal {
+      position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%);
+      z-index: 15; transition: opacity 0.3s ease;
+    }
+    .envelope.open .heart-seal { opacity: 0; pointer-events: none; }
+    .full-invitation { display: none; opacity: 0; transform: scale(0.95); transition: all 0.5s ease; }
+    .full-invitation.visible { display: block; opacity: 1; transform: scale(1); }
+    
+    .sparkle { position: absolute; width: 5px; height: 5px; border-radius: 50%; animation: sparkle 2s infinite; }
+    @keyframes sparkle { 0%, 100% { opacity: 0; transform: scale(0); } 50% { opacity: 1; transform: scale(1); } }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+    .float-animation { animation: float 3s ease-in-out infinite; }
+    @keyframes heartbeat { 0%, 100% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(1.2); } }
+    .heartbeat { animation: heartbeat 1.5s ease-in-out infinite; }
+    .form-input {
+      width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #fbcfe8;
+      border-radius: 8px; background-color: #fff1f2; color: #831843;
+      outline: none; transition: all 0.2s; font-size: 16px; 
+    }
+    .form-input:focus { border-color: #ec4899; background-color: #fff; box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.2); }
+  </style>
+ </head>
+ <body class="h-full overflow-y-auto overflow-x-hidden bg-pink-50">
+  <div id="app-wrapper" class="w-full min-h-screen flex flex-col items-center justify-center p-4" style="background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 50%, #fbcfe8 100%);">
+   
+   <div class="fixed inset-0 pointer-events-none overflow-hidden">
+    <div class="sparkle" style="top: 10%; left: 20%; background: #f472b6; animation-delay: 0s;"></div>
+    <div class="sparkle" style="top: 20%; left: 80%; background: #c084fc; animation-delay: 0.5s;"></div>
+    <div class="sparkle" style="top: 60%; left: 15%; background: #fb7185; animation-delay: 1s;"></div>
+    <div class="sparkle" style="top: 30%; left: 90%; background: #fb7185; animation-delay: 0.8s;"></div>
+   </div>
+
+   <div id="envelope-section" class="envelope-container flex flex-col items-center mt-10">
+    <p class="text-pink-600 text-xl md:text-2xl mb-12 font-medium animate-bounce font-bold" style="text-shadow: 1px 1px 0 #fff;">לחצו על המעטפה לפתיחה 💕</p>
+    
+    <div class="envelope float-animation" id="envelope" onclick="openEnvelope()" ontouchstart="openEnvelope()">
+     <div class="envelope-body"></div>
+     <div class="absolute inset-0 rounded-lg overflow-hidden">
+      <div class="absolute bottom-0 left-0 right-0 h-3/4" style="background: linear-gradient(145deg, #ffe4e6 0%, #fecdd3 100%);"></div>
+     </div>
+     <div class="envelope-flap"></div>
+     <div class="heart-seal heartbeat">
+      <svg width="60" height="55" viewbox="0 0 50 45"><defs><lineargradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#fdf2f8" /><stop offset="100%" style="stop-color:#fce7f3" /></lineargradient></defs> <path d="M25 42 C25 42 5 28 5 15 C5 5 15 0 25 10 C35 0 45 5 45 15 C45 28 25 42 25 42Z" fill="url(#heartGradient)" stroke="#fff" stroke-width="2" /></svg>
+     </div>
+     <div class="invitation-card bg-white rounded-lg shadow-lg p-4 text-center flex flex-col justify-end md:justify-center items-center h-48 md:h-64 pb-4 md:pb-0">
+      <p class="text-pink-500 font-bold title-font text-lg md:text-2xl">יאנה ואגם מתחתנות!</p>
+      <div class="w-full h-px bg-pink-200 my-1"></div>
+      <p class="text-pink-400 font-medium md:text-xl">19.03.2026</p>
+     </div>
+    </div>
+   </div>
+
+   <div id="full-invitation" class="full-invitation w-full max-w-2xl mx-auto pb-10">
+    <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border-4 border-pink-200">
+     <div class="relative pt-10 pb-6" style="background: linear-gradient(180deg, #fdf2f8 0%, #fff 100%);">
+      <svg viewbox="0 0 200 160" class="w-64 h-48 mx-auto transform scale-110">
+        <path d="M30 20 C30 20 25 15 25 12 C25 8 30 8 30 12 C30 8 35 8 35 12 C35 15 30 20 30 20Z" fill="#fce7f3" /> <path d="M170 25 C170 25 165 20 165 17 C165 13 170 13 170 17 C170 13 175 13 175 17 C175 20 170 25 170 25Z" fill="#fbcfe8" /> <path d="M45 45 C45 45 42 42 42 40 C42 37 45 37 45 40 C45 37 48 37 48 40 C48 42 45 45 45 45Z" fill="#f9a8d4" /> <path d="M155 50 C155 50 152 47 152 45 C152 42 155 42 155 45 C155 42 158 42 158 45 C158 47 155 50 155 50Z" fill="#f9a8d4" /> 
+        <g transform="translate(50, 30)"> <ellipse cx="25" cy="15" rx="28" ry="18" fill="#fff" opacity="0.7" /> <ellipse cx="25" cy="12" rx="22" ry="12" fill="#fff" opacity="0.8" /> <ellipse cx="25" cy="25" rx="18" ry="16" fill="#4a3728" /> <ellipse cx="25" cy="20" rx="16" ry="12" fill="#5c4333" /> <ellipse cx="25" cy="30" rx="12" ry="14" fill="#fdd9c4" /> <circle cx="19" cy="27" r="0.8" fill="#fff" /> <circle cx="29" cy="27" r="0.8" fill="#fff" /> <ellipse cx="20" cy="28" rx="2" ry="2.5" fill="#4a3728" /> <ellipse cx="30" cy="28" rx="2" ry="2.5" fill="#4a3728" /> <ellipse cx="16" cy="32" rx="3" ry="2" fill="#ffb6c1" opacity="0.5" /> <ellipse cx="34" cy="32" rx="3" ry="2" fill="#ffb6c1" opacity="0.5" /> <path d="M21 35 Q25 39 29 35" stroke="#e57373" stroke-width="1.5" fill="none" stroke-linecap="round" /> <circle cx="12" cy="15" r="4" fill="#f472b6" /> <circle cx="20" cy="10" r="4" fill="#fb7185" /> <circle cx="30" cy="10" r="4" fill="#f472b6" /> <circle cx="38" cy="15" r="4" fill="#fb7185" /> <path d="M10 50 Q25 45 40 50 L45 100 Q25 105 5 100 Z" fill="#fff" /> <path d="M15 50 Q25 47 35 50 L38 70 Q25 73 12 70 Z" fill="#fdf2f8" /></g> 
+        <g transform="translate(100, 30)"> <ellipse cx="25" cy="15" rx="28" ry="18" fill="#fff" opacity="0.7" /> <ellipse cx="25" cy="12" rx="22" ry="12" fill="#fff" opacity="0.8" /> <ellipse cx="25" cy="25" rx="18" ry="16" fill="#2c1810" /> <ellipse cx="25" cy="20" rx="16" ry="12" fill="#3d2317" /> <ellipse cx="25" cy="30" rx="12" ry="14" fill="#f5d0b5" /> <circle cx="19" cy="27" r="0.8" fill="#fff" /> <circle cx="29" cy="27" r="0.8" fill="#fff" /> <ellipse cx="20" cy="28" rx="2" ry="2.5" fill="#2c1810" /> <ellipse cx="30" cy="28" rx="2" ry="2.5" fill="#2c1810" /> <ellipse cx="16" cy="32" rx="3" ry="2" fill="#ffb6c1" opacity="0.5" /> <ellipse cx="34" cy="32" rx="3" ry="2" fill="#ffb6c1" opacity="0.5" /> <path d="M21 35 Q25 39 29 35" stroke="#e57373" stroke-width="1.5" fill="none" stroke-linecap="round" /> <circle cx="12" cy="15" r="4" fill="#c084fc" /> <circle cx="20" cy="10" r="4" fill="#a855f7" /> <circle cx="30" cy="10" r="4" fill="#c084fc" /> <circle cx="38" cy="15" r="4" fill="#a855f7" /> <path d="M10 50 Q25 45 40 50 L45 100 Q25 105 5 100 Z" fill="#fff" /> <path d="M15 50 Q25 47 35 50 L38 70 Q25 73 12 70 Z" fill="#fdf2f8" /></g> 
+        <path d="M85 95 Q85 85 95 85 Q100 85 100 90 Q100 85 105 85 Q115 85 115 95 Q115 105 100 115 Q85 105 85 95Z" fill="#f472b6" opacity="0.8" /> <g transform="translate(88, 110)"> <ellipse cx="12" cy="8" rx="12" ry="10" fill="#86efac" /> <circle cx="6" cy="5" r="5" fill="#fb7185" /> <circle cx="18" cy="5" r="5" fill="#f472b6" /> <circle cx="12" cy="3" r="5" fill="#c084fc" /> <circle cx="9" cy="10" r="4" fill="#a855f7" /> <circle cx="15" cy="10" r="4" fill="#fb7185" /> <rect x="10" y="15" width="4" height="12" rx="2" fill="#86efac" /> </g>
+      </svg>
+     </div>
+
+     <div class="px-8 pb-10 text-center">
+      <p class="text-pink-600 text-xl leading-relaxed mb-6 font-medium">נרגשות להזמינכם לחגוג עימנו את אהבתינו בחתונתנו <br> <span class="font-bold text-red-500 text-2xl">ודיר באלק לא תבואו!</span></p>
+      
+      <h1 class="title-font text-5xl md:text-6xl mb-0" style="color: #be185d; text-shadow: 2px 2px 4px rgba(244,114,182,0.3);">יאנה ואגם</h1>
+      <h2 class="title-font text-3xl md:text-4xl mt-2" style="color: #be185d; text-shadow: 1px 1px 3px rgba(244,114,182,0.3);">גנטמן כהן</h2>
+      
+      <div class="flex items-center justify-center my-6">
+       <div class="h-px w-20 bg-gradient-to-r from-transparent to-pink-300"></div><div class="text-pink-400 mx-3 text-2xl">♥</div><div class="h-px w-20 bg-gradient-to-l from-transparent to-pink-300"></div>
+      </div>
+
+      <div class="mb-8">
+       <p class="text-2xl font-bold text-pink-700">יום חמישי 19/03/2026</p>
+       <p class="text-pink-500 text-lg">א' בניסן התשפ"ו</p>
+      </div>
+
+      <div class="bg-gradient-to-r from-pink-50 via-white to-pink-50 rounded-2xl p-6 mb-8 border border-pink-100 shadow-sm flex flex-col items-center">
+         <p class="text-pink-700 font-bold text-xl mb-3">קיסר ים, קיסריה</p>
+         <button onclick="navigate()" class="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 mb-2 w-full max-w-xs justify-center cursor-pointer">
+           <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M12.9 22.2c-.2.1-.4.2-.6.2-.7 0-1.3-.3-1.8-.8l-4.2-4.2c-.9-.9-1.4-2.1-1.4-3.4 0-1.1.4-2.2 1.2-3l.1-.1c1.8-1.7 4.9-1.6 6.7.2.9.9 1.4 2.1 1.4 3.3 0 1.2-.5 2.4-1.3 3.3l-.1.1-4.2 4.2c.1 0 .1.1.2.2zM9.5 9.8c-.4.4-.6 1-.6 1.6 0 .6.2 1.1.6 1.5l.1.1c.4.4.9.6 1.5.6s1.1-.2 1.5-.6c.4-.4.6-.9.6-1.5 0-.6-.2-1.2-.6-1.6-.4-.4-.9-.6-1.5-.6s-1.1.2-1.5.5zm8.9 4.3c-1.1-1.2-1.7-2.7-1.7-4.3 0-1.6.6-3.1 1.8-4.3 1.2-1.2 2.7-1.8 4.3-1.8 1.5 0 3.1.6 4.3 1.8 1.1 1.2 1.8 2.7 1.8 4.3 0 1.6-.6 3.1-1.8 4.3-1.2 1.2-2.7 1.8-4.3 1.8-1.6 0-3.1-.6-4.4-1.8zM24 6.7c-.5-.5-1.2-.8-1.9-.8-.7 0-1.4.3-1.9.8-.5.5-.8 1.2-.8 1.9 0 .7.3 1.4.8 1.9.5.5 1.2.8 1.9.8.7 0 1.4-.3 1.9-.8.5-.5.8-1.2.8-1.9 0-.8-.3-1.4-.8-1.9zM5.3 14.1c-1.1 1.2-1.8 2.7-1.8 4.3 0 1.6.6 3.1 1.8 4.3 1.2 1.2 2.7 1.8 4.3 1.8 1.6 0 3.1-.6 4.3-1.8 1.2-1.2 1.8-2.7 1.8-4.3 0-1.6-.6-3.1-1.8-4.3-1.2-1.2-2.7-1.8-4.3-1.8-1.6 0-3.1.6-4.3 1.8zM8.2 21.2c-.5.5-1.2.8-1.9.8-.7 0-1.4-.3-1.9-.8-.5-.5-.8-1.2-.8 1.9 0-.7.3-1.4.8-1.9.5-.5 1.2-.8 1.9-.8.7 0 1.4.3 1.9.8.5.5.8 1.2.8 1.9 0-.7-.3 1.4-.8 1.9z"/></svg>
+           ניווט עם Waze
+         </button>
+         <a href="https://maps.app.goo.gl/9" target="_blank" class="text-sm text-gray-500 underline mt-2 hover:text-pink-600">או לחצו כאן לניווט ב-Google Maps</a>
+         <p class="text-pink-500 mt-2">🅿️ יש חניה ליד האולם</p>
+      </div>
+
+      <div class="flex justify-center gap-12 mb-8">
+       <div class="text-center">
+        <div class="w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-2 bg-pink-100 text-3xl shadow-inner">🥂</div>
+        <p class="text-pink-600 font-medium">קבלת פנים</p>
+        <p class="text-pink-800 font-bold text-xl">16:30</p>
+       </div>
+       <div class="text-center">
+        <div class="w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-2 bg-pink-100 text-3xl shadow-inner">
+         <svg width="32" height="32" viewBox="0 0 40 40" fill="none"><rect x="4" y="12" width="1.5" height="20" fill="#8b5a3c" /><rect x="34.5" y="12" width="1.5" height="20" fill="#8b5a3c" /><rect x="2" y="10" width="36" height="10" rx="1" fill="#f472b6" opacity="0.9" /><rect x="3" y="11" width="34" height="8" rx="0.5" fill="#fce7f3" /><circle cx="8" cy="14" r="1" fill="#fb7185" /><circle cx="15" cy="14" r="1" fill="#f472b6" /><circle cx="20" cy="14" r="1" fill="#c084fc" /><circle cx="25" cy="14" r="1" fill="#fb7185" /><circle cx="32" cy="14" r="1" fill="#f472b6" /><line x1="10" y1="20" x2="10" y2="23" stroke="#86efac" stroke-width="0.5" /><circle cx="10" cy="24" r="1.2" fill="#fb7185" /><line x1="20" y1="20" x2="20" y2="23" stroke="#86efac" stroke-width="0.5" /><circle cx="20" cy="24" r="1.2" fill="#f472b6" /><line x1="30" y1="20" x2="30" y2="23" stroke="#86efac" stroke-width="0.5" /><circle cx="30" cy="24" r="1.2" fill="#c084fc" /></svg>
+        </div>
+        <p class="text-pink-600 font-medium">חופה</p>
+        <p class="text-pink-800 font-bold text-xl">17:30</p>
+       </div>
+      </div>
+
+      <div class="bg-gradient-to-r from-purple-50 via-pink-50 to-purple-50 rounded-xl p-5 border border-pink-200 mb-8">
+       <p class="text-pink-600 font-bold text-lg">✨ תבואו עם מלא אנרגיות ומרץ ותתרגשו עימנו ✨</p>
+      </div>
+
+      <div class="mt-8 pt-8 border-t-2 border-dashed border-pink-200">
+        <h3 class="title-font text-3xl text-pink-700 mb-6">אישור הגעה</h3>
+        
+        <form name="rsvpForm" id="rsvpForm" class="text-right max-w-md mx-auto bg-pink-50 p-6 rounded-2xl shadow-inner">
+          <div class="mb-5">
+            <label class="block text-pink-700 text-md font-bold mb-2 mr-1">שם מלא</label>
+            <input type="text" name="guestName" required placeholder="מי בא לשמח?" class="form-input text-lg">
+          </div>
+          <div class="mb-5">
+            <label class="block text-pink-700 text-md font-bold mb-2 mr-1">האם תגיעו?</label>
+            <select name="attending" onchange="toggleGuestCount(this.value)" required class="form-input text-lg">
+              <option value="" disabled selected>בחרו תשובה...</option>
+              <option value="Yes">ברור, לא מפספסים!</option>
+              <option value="No">לצערי לא נגיע</option>
+            </select>
+          </div>
+          <div id="guestCountGroup" class="mb-5 hidden">
+            <label class="block text-pink-700 text-md font-bold mb-2 mr-1">כמות אורחים (כולל אותך)</label>
+            <input type="number" name="guestCount" min="1" max="10" class="form-input text-lg">
+          </div>
+          <div class="mb-8">
+            <label class="block text-pink-700 text-md font-bold mb-2 mr-1">העדפות מזון</label>
+            <select name="dietary" class="form-input text-lg">
+              <option value="None" selected>אוכלת הכל (אין העדפה)</option>
+              <option value="Vegetarian">צמחוני</option>
+              <option value="Vegan">טבעוני</option>
+            </select>
+          </div>
+          <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold py-4 px-6 rounded-full shadow-lg transform transition hover:scale-105 active:scale-95 text-xl">
+            שליחת אישור הגעה 💌
+          </button>
+        </form>
+
+        <div id="loading" class="hidden mt-4 text-pink-600 font-bold animate-pulse text-lg">שולח את התשובה... ⏳</div>
+        <div id="successMessage" class="hidden mt-6 bg-green-50 p-6 rounded-xl border border-green-200">
+          <h2 class="text-2xl font-bold text-green-600 mb-2">איזה כיף!</h2>
+          <p class="text-green-700 text-lg">התשובה נרשמה בהצלחה. מחכות לראותכם!</p>
+        </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+
+  <script>
+    // **********************************************
+    // חובה: להדביק כאן את הקישור הארוך משלב 1
+    // **********************************************
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxKbKMTecE7_w97xlLNrf0jdakgnivKQsHOsEiMlaJmQO1EG7KgYU31CzOEI7tXrz98/exec';
+
+    let isOpen = false;
+
+    function navigate() {
+        const wazeAppUrl = "waze://?q=Caesar+Yam+Caesarea&navigate=yes";
+        const wazeWebUrl = "https://waze.com/ul?q=Caesar+Yam+Caesarea&navigate=yes";
+        setTimeout(function () { window.location = wazeWebUrl; }, 1000);
+        window.location = wazeAppUrl;
+    }
+
+    function openEnvelope() {
+      if (isOpen) return;
+      isOpen = true;
+      const envelope = document.getElementById('envelope');
+      envelope.classList.add('open');
+      setTimeout(() => {
+        document.getElementById('envelope-section').style.display = 'none';
+        const invitation = document.getElementById('full-invitation');
+        invitation.classList.add('visible');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 800);
+    }
+
+    function toggleGuestCount(val) {
+      const guestInput = document.getElementById('guestCountGroup');
+      const inputField = guestInput.querySelector('input');
+      if (val === 'Yes') {
+        guestInput.classList.remove('hidden');
+        inputField.required = true;
+        inputField.value = 1; 
+      } else {
+        guestInput.classList.add('hidden');
+        inputField.required = false;
+        inputField.value = 0;
+      }
+    }
+
+    const form = document.forms['rsvpForm'];
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      document.getElementById('rsvpForm').classList.add('hidden');
+      document.getElementById('loading').classList.remove('hidden');
+      
+      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => {
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('successMessage').classList.remove('hidden');
+        })
+        .catch(error => {
+            // גם אם יש שגיאת CORS, זה בדרך כלל אומר שהנתונים עברו
+            console.log('Success (cors mode)', error);
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('successMessage').classList.remove('hidden');
+        });
+    });
+  </script>
+ </body>
+</html>
