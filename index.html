@@ -238,18 +238,53 @@
     }
 
     function toggleGuestCount(val) {
-      const guestInput = document.getElementById('guestCountGroup');
-      const inputField = guestInput.querySelector('input');
+      const guestInputGroup = document.getElementById('guestCountGroup');
+      const countSelect = guestInputGroup.querySelector('select');
+      const dietaryContainer = document.getElementById('dietaryContainer');
+      
       if (val === 'Yes') {
-        guestInput.classList.remove('hidden');
-        inputField.required = true;
-        inputField.value = 1; 
+        guestInputGroup.classList.remove('hidden');
+        countSelect.required = true;
+        countSelect.value = ""; // מאפס לברירת המחדל "בחרו כמות"
+        dietaryContainer.innerHTML = ''; // מנקה את העדפות המזון עד שיבחרו מספר
       } else {
-        guestInput.classList.add('hidden');
-        inputField.required = false;
-        inputField.value = 0;
+        guestInputGroup.classList.add('hidden');
+        countSelect.required = false;
+        countSelect.value = "";
+        dietaryContainer.innerHTML = '';
       }
     }
+
+    function updateDietaryInputs(count) {
+      const container = document.getElementById('dietaryContainer');
+      if (!count) {
+        container.innerHTML = '';
+        return;
+      }
+      
+      container.innerHTML = '<label class="block text-pink-700 text-md font-bold mb-3 mr-1">העדפות מזון לכל אורח:</label>';
+      
+      for (let i = 1; i <= count; i++) {
+        const labelText = count > 1 ? `אורח ${i}:` : `העדפת מזון:`;
+        const html = `
+          <div class="mb-3 flex items-center gap-2">
+            <span class="text-pink-600 font-medium text-sm w-16">${labelText}</span>
+            <select name="dietary_${i}" class="form-input text-base py-2" required>
+              <option value="None" selected>אוכל/ת הכל</option>
+              <option value="Vegetarian">צמחוני/ת</option>
+              <option value="Vegan">טבעוני/ת</option>
+              <option value="Landa">הכשר לנדא</option>
+            </select>
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', html);
+      }
+    }
+
+    // שינוי ה-EventListener שיעבוד עם ה-Dropdown (אירוע change במקום input)
+    document.querySelector('select[name="guestCount"]').addEventListener('change', function(e) {
+      updateDietaryInputs(parseInt(e.target.value));
+    });
 
     const form = document.forms['rsvpForm'];
     
