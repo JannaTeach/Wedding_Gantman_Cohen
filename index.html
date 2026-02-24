@@ -167,11 +167,22 @@
               <option value="No">לצערי לא נגיע</option>
             </select>
           </div>
-          <div id="guestCountGroup" class="mb-5 hidden">
+         <div id="guestCountGroup" class="mb-5 hidden">
             <label class="block text-pink-700 text-md font-bold mb-2 mr-1">כמות אורחים (כולל אותך)</label>
-            <input type="number" name="guestCount" min="1" max="10" class="form-input text-lg">
-          </div>
-          <div class="mb-8">
+            <select name="guestCount" class="form-input text-lg" required>
+              <option value="" disabled selected>בחרו כמות...</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+            </select>
+          </div>          
+         <div class="mb-8">
             <label class="block text-pink-700 text-md font-bold mb-2 mr-1">העדפות מזון</label>
             <select name="dietary" class="form-input text-lg">
               <option value="None" selected>אוכלת הכל (אין העדפה)</option>
