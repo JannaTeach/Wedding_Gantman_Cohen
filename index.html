@@ -120,16 +120,28 @@
        <p class="text-pink-500 text-lg">א' בניסן התשפ"ו</p>
       </div>
 
-      <div class="bg-gradient-to-r from-pink-50 via-white to-pink-50 rounded-2xl p-6 mb-8 border border-pink-100 shadow-sm flex flex-col items-center">
-         <p class="text-pink-700 font-bold text-xl mb-3">קיסר ים, קיסריה</p>
-         <button onclick="navigate()" class="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 mb-2 w-full max-w-xs justify-center cursor-pointer">
-           <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M12.9 22.2c-.2.1-.4.2-.6.2-.7 0-1.3-.3-1.8-.8l-4.2-4.2c-.9-.9-1.4-2.1-1.4-3.4 0-1.1.4-2.2 1.2-3l.1-.1c1.8-1.7 4.9-1.6 6.7.2.9.9 1.4 2.1 1.4 3.3 0 1.2-.5 2.4-1.3 3.3l-.1.1-4.2 4.2c.1 0 .1.1.2.2zM9.5 9.8c-.4.4-.6 1-.6 1.6 0 .6.2 1.1.6 1.5l.1.1c.4.4.9.6 1.5.6s1.1-.2 1.5-.6c.4-.4.6-.9.6-1.5 0-.6-.2-1.2-.6-1.6-.4-.4-.9-.6-1.5-.6s-1.1.2-1.5.5zm8.9 4.3c-1.1-1.2-1.7-2.7-1.7-4.3 0-1.6.6-3.1 1.8-4.3 1.2-1.2 2.7-1.8 4.3-1.8 1.5 0 3.1.6 4.3 1.8 1.1 1.2 1.8 2.7 1.8 4.3 0 1.6-.6 3.1-1.8 4.3-1.2 1.2-2.7 1.8-4.3 1.8-1.6 0-3.1-.6-4.4-1.8zM24 6.7c-.5-.5-1.2-.8-1.9-.8-.7 0-1.4.3-1.9.8-.5.5-.8 1.2-.8 1.9 0 .7.3 1.4.8 1.9.5.5 1.2.8 1.9.8.7 0 1.4-.3 1.9-.8.5-.5.8-1.2.8-1.9 0-.8-.3-1.4-.8-1.9zM5.3 14.1c-1.1 1.2-1.8 2.7-1.8 4.3 0 1.6.6 3.1 1.8 4.3 1.2 1.2 2.7 1.8 4.3 1.8 1.6 0 3.1-.6 4.3-1.8 1.2-1.2 1.8-2.7 1.8-4.3 0-1.6-.6-3.1-1.8-4.3-1.2-1.2-2.7-1.8-4.3-1.8-1.6 0-3.1.6-4.3 1.8zM8.2 21.2c-.5.5-1.2.8-1.9.8-.7 0-1.4-.3-1.9-.8-.5-.5-.8-1.2-.8 1.9 0-.7.3-1.4.8-1.9.5-.5 1.2-.8 1.9-.8.7 0 1.4.3 1.9.8.5.5.8 1.2.8 1.9 0-.7-.3 1.4-.8 1.9z"/></svg>
-           ניווט עם Waze
-         </button>
-         <a href="https://www.google.com/maps/search/?api=1&query=Caesar+Yam+Caesarea" target="_blank" class="text-sm text-gray-500 underline mt-2 hover:text-pink-600">
-          או לחצו כאן לניווט ב-Google Maps
-       </a>
-         <p class="text-pink-500 mt-2">🅿️ יש חניה ליד האולם</p>
+<div class="bg-gradient-to-r from-pink-50 via-white to-pink-50 rounded-2xl p-6 mb-8 border border-pink-100 shadow-sm">
+         <p class="text-pink-800 font-bold text-xl mb-4 text-center">החתונה תתקיים באחד מהאולמות הבאים:</p>
+         
+         <div class="flex flex-col gap-4">
+             <div class="flex flex-col items-center p-4 bg-white rounded-xl shadow-sm border border-pink-100">
+                <p class="text-pink-700 font-bold text-lg mb-2">קיסר ים, קיסריה</p>
+                <button onclick="navigate('caesar')" class="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-full shadow-md transition-transform transform hover:scale-105 w-full max-w-xs justify-center cursor-pointer">
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M12.9 22.2c-.2.1-.4.2-.6.2-.7 0-1.3-.3-1.8-.8l-4.2-4.2c-.9-.9-1.4-2.1-1.4-3.4 0-1.1.4-2.2 1.2-3l.1-.1c1.8-1.7 4.9-1.6 6.7.2.9.9 1.4 2.1 1.4 3.3 0 1.2-.5 2.4-1.3 3.3l-.1.1-4.2 4.2c.1 0 .1.1.2.2zM9.5 9.8c-.4.4-.6 1-.6 1.6 0 .6.2 1.1.6 1.5l.1.1c.4.4.9.6 1.5.6s1.1-.2 1.5-.6c.4-.4.6-.9.6-1.5 0-.6-.2-1.2-.6-1.6-.4-.4-.9-.6-1.5-.6s-1.1.2-1.5.5zm8.9 4.3c-1.1-1.2-1.7-2.7-1.7-4.3 0-1.6.6-3.1 1.8-4.3 1.2-1.2 2.7-1.8 4.3-1.8 1.5 0 3.1.6 4.3 1.8 1.1 1.2 1.8 2.7 1.8 4.3 0 1.6-.6 3.1-1.8 4.3-1.2 1.2-2.7 1.8-4.3 1.8-1.6 0-3.1-.6-4.4-1.8zM24 6.7c-.5-.5-1.2-.8-1.9-.8-.7 0-1.4.3-1.9.8-.5.5-.8 1.2-.8 1.9 0 .7.3 1.4.8 1.9.5.5 1.2.8 1.9.8.7 0 1.4-.3 1.9-.8.5-.5.8-1.2.8-1.9 0-.8-.3-1.4-.8-1.9zM5.3 14.1c-1.1 1.2-1.8 2.7-1.8 4.3 0 1.6.6 3.1 1.8 4.3 1.2 1.2 2.7 1.8 4.3 1.8 1.6 0 3.1-.6 4.3-1.8 1.2-1.2 1.8-2.7 1.8-4.3 0-1.6-.6-3.1-1.8-4.3-1.2-1.2-2.7-1.8-4.3-1.8-1.6 0-3.1.6-4.3 1.8zM8.2 21.2c-.5.5-1.2.8-1.9.8-.7 0-1.4-.3-1.9-.8-.5-.5-.8-1.2-.8 1.9 0-.7.3-1.4.8-1.9.5-.5 1.2-.8 1.9-.8.7 0 1.4.3 1.9.8.5.5.8 1.2.8 1.9 0 .7-.3 1.4-.8 1.9z"/></svg>
+                  לניווט לקיסר ים
+                </button>
+             </div>
+             
+             <div class="flex flex-col items-center p-4 bg-white rounded-xl shadow-sm border border-pink-100">
+                <p class="text-pink-700 font-bold text-lg mb-2">5.91, נתניה</p>
+                <button onclick="navigate('591')" class="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-full shadow-md transition-transform transform hover:scale-105 w-full max-w-xs justify-center cursor-pointer">
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M12.9 22.2c-.2.1-.4.2-.6.2-.7 0-1.3-.3-1.8-.8l-4.2-4.2c-.9-.9-1.4-2.1-1.4-3.4 0-1.1.4-2.2 1.2-3l.1-.1c1.8-1.7 4.9-1.6 6.7.2.9.9 1.4 2.1 1.4 3.3 0 1.2-.5 2.4-1.3 3.3l-.1.1-4.2 4.2c.1 0 .1.1.2.2zM9.5 9.8c-.4.4-.6 1-.6 1.6 0 .6.2 1.1.6 1.5l.1.1c.4.4.9.6 1.5.6s1.1-.2 1.5-.6c.4-.4.6-.9.6-1.5 0-.6-.2-1.2-.6-1.6-.4-.4-.9-.6-1.5-.6s-1.1.2-1.5.5zm8.9 4.3c-1.1-1.2-1.7-2.7-1.7-4.3 0-1.6.6-3.1 1.8-4.3 1.2-1.2 2.7-1.8 4.3-1.8 1.5 0 3.1.6 4.3 1.8 1.1 1.2 1.8 2.7 1.8 4.3 0 1.6-.6 3.1-1.8 4.3-1.2 1.2-2.7 1.8-4.3 1.8-1.6 0-3.1-.6-4.4-1.8zM24 6.7c-.5-.5-1.2-.8-1.9-.8-.7 0-1.4.3-1.9.8-.5.5-.8 1.2-.8 1.9 0 .7.3 1.4.8 1.9.5.5 1.2.8 1.9.8.7 0 1.4-.3 1.9-.8.5-.5.8-1.2.8-1.9 0-.8-.3-1.4-.8-1.9zM5.3 14.1c-1.1 1.2-1.8 2.7-1.8 4.3 0 1.6.6 3.1 1.8 4.3 1.2 1.2 2.7 1.8 4.3 1.8 1.6 0 3.1-.6 4.3-1.8 1.2-1.2 1.8-2.7 1.8-4.3 0-1.6-.6-3.1-1.8-4.3-1.2-1.2-2.7-1.8-4.3-1.8-1.6 0-3.1.6-4.3 1.8zM8.2 21.2c-.5.5-1.2.8-1.9.8-.7 0-1.4-.3-1.9-.8-.5-.5-.8-1.2-.8 1.9 0-.7.3-1.4.8-1.9.5-.5 1.2-.8 1.9-.8.7 0 1.4.3 1.9.8.5.5.8 1.2.8 1.9 0 .7-.3 1.4-.8 1.9z"/></svg>
+                  לניווט ל-5.91
+                </button>
+             </div>
+         </div>
+         
+         <p class="text-pink-500 text-sm mt-4 text-center">🅿️ בשני המקומות יש חניה קרובה ונוחה</p>
       </div>
 
       <div class="flex justify-center gap-12 mb-8">
@@ -214,12 +226,18 @@
 
     let isOpen = false;
 
-    function navigate() {
-        // מנסה לפתוח אפליקציה
-        const wazeAppUrl = "waze://?q=Caesar+Yam+Caesarea&navigate=yes";
-        // גיבוי לדפדפן
-        const wazeWebUrl = "https://waze.com/ul?q=Caesar+Yam+Caesarea&navigate=yes";
+function navigate(venue) {
+        let wazeWebUrl, wazeAppUrl;
         
+        if (venue === '591') {
+            wazeWebUrl = "https://waze.com/ul?q=5.91+Netanya&navigate=yes";
+            wazeAppUrl = "waze://?q=5.91+Netanya&navigate=yes";
+        } else {
+            wazeWebUrl = "https://waze.com/ul?q=Caesar+Yam+Caesarea&navigate=yes";
+            wazeAppUrl = "waze://?q=Caesar+Yam+Caesarea&navigate=yes";
+        }
+        
+        // מנסה לפתוח באפליקציה, ואם אין - עובר לדפדפן
         setTimeout(function () { window.location = wazeWebUrl; }, 1000);
         window.location = wazeAppUrl;
     }
