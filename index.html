@@ -227,21 +227,14 @@
 
     let isOpen = false;
 
-function navigate(venue) {
-        let wazeWebUrl, wazeAppUrl;
+    function navigate() {
+        const wazeWebUrl = "https://waze.com/ul?q=5.91+Netanya&navigate=yes";
+        const wazeAppUrl = "waze://?q=5.91+Netanya&navigate=yes";
         
-        if (venue === '591') {
-            wazeWebUrl = "https://waze.com/ul?q=5.91+Netanya&navigate=yes";
-            wazeAppUrl = "waze://?q=5.91+Netanya&navigate=yes";
-        } else {
-            wazeWebUrl = "https://waze.com/ul?q=Caesar+Yam+Caesarea&navigate=yes";
-            wazeAppUrl = "waze://?q=Caesar+Yam+Caesarea&navigate=yes";
-        }
-        
-        // מנסה לפתוח באפליקציה, ואם אין - עובר לדפדפן
         setTimeout(function () { window.location = wazeWebUrl; }, 1000);
         window.location = wazeAppUrl;
     }
+
 
     function openEnvelope() {
       if (isOpen) return;
