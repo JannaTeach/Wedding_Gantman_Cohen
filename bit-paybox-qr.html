@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מתנות לחתונה – אגם ויאנה</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+Hebrew:wght@200;300;400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  :root {
+    --cream: #fdf8f0;
+    --gold: #c9a96e;
+    --gold-light: #e8d5a3;
+    --teal: #2a6b5a;
+    --teal-mid: #3d8a74;
+    --teal-light: #7dbba5;
+    --text-dark: #2c2c2c;
+    --text-mid: #5a5a5a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    font-family: 'Noto Serif Hebrew', serif;
+    background-image:
+      radial-gradient(ellipse at 10% 10%, rgba(201,169,110,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 90% 90%, rgba(42,107,90,0.07) 0%, transparent 60%);
+  }
+
+  .page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+    width: 100%;
+    max-width: 520px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    animation: fadeDown .9s ease both;
+  }
+  .header-script {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3.8rem;
+    color: var(--teal);
+    line-height: 1.1;
+    text-shadow: 0 2px 12px rgba(42,107,90,.15);
+    display: block;
+  }
+  .header-date {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    letter-spacing: 5px;
+    color: var(--gold);
+    margin-top: 6px;
+    font-weight: 300;
+    text-transform: uppercase;
+    display: block;
+  }
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 16px auto 0;
+    width: fit-content;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    width: 70px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold));
+  }
+  .divider::after { background: linear-gradient(to left, transparent, var(--gold)); }
+  .divider span { color: var(--gold); font-size: 1rem; }
+
+  /* Cards */
+  .card {
+    width: 100%;
+    background: #fff;
+    border-radius: 24px;
+    box-shadow:
+      0 4px 40px rgba(42,107,90,.12),
+      0 1px 6px rgba(0,0,0,.06),
+      inset 0 0 0 1px rgba(201,169,110,.2);
+    overflow: hidden;
+    position: relative;
+    animation: fadeUp .9s ease both;
+  }
+  .card:nth-child(2) { animation-delay: .1s; }
+  .card:nth-child(3) { animation-delay: .2s; }
+
+  /* Corner ornaments */
+  .card::before, .card::after {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-color: var(--gold-light);
+    border-style: solid;
+    border-width: 0;
+    opacity: .7;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .card::before {
+    top: 12px; right: 12px;
+    border-top-width: 1.5px;
+    border-right-width: 1.5px;
+    border-radius: 0 8px 0 0;
+  }
+  .card::after {
+    bottom: 12px; left: 12px;
+    border-bottom-width: 1.5px;
+    border-left-width: 1.5px;
+    border-radius: 0 0 8px 0;
+  }
+
+  /* Card top band */
+  .card-band {
+    height: 6px;
+    background: linear-gradient(90deg, var(--teal) 0%, var(--teal-light) 50%, var(--gold) 100%);
+  }
+
+  .card-body {
+    padding: 32px 32px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  /* App logo area */
+  .app-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .app-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,.15);
+  }
+  .app-icon.paybox {
+    background: linear-gradient(135deg, #1a6fd4, #0d47a1);
+    color: white;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+  }
+  .app-icon.bit {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    color: white;
+  }
+  .app-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--text-dark);
+  }
+
+  /* Main instruction */
+  .card-title {
+    text-align: center;
+  }
+  .card-title h2 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--teal);
+    line-height: 1.5;
+    margin-bottom: 4px;
+  }
+  .card-title p {
+    font-size: .85rem;
+    color: var(--text-mid);
+    font-weight: 300;
+    letter-spacing: .5px;
+  }
+
+  /* QR container */
+  .qr-frame {
+    position: relative;
+    padding: 16px;
+    background: white;
+    border-radius: 16px;
+    box-shadow:
+      0 8px 32px rgba(42,107,90,.12),
+      0 0 0 1.5px rgba(201,169,110,.3);
+  }
+  .qr-frame canvas, .qr-frame img {
+    display: block;
+    border-radius: 6px;
+  }
+
+  /* QR corner brackets */
+  .qr-bracket {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-color: var(--teal-light);
+    border-style: solid;
+    border-width: 0;
+    opacity: .8;
+  }
+  .qr-bracket.tl { top: 6px; right: 6px; border-top-width: 2px; border-right-width: 2px; border-radius: 0 4px 0 0; }
+  .qr-bracket.tr { top: 6px; left: 6px; border-top-width: 2px; border-left-width: 2px; border-radius: 4px 0 0 0; }
+  .qr-bracket.bl { bottom: 6px; right: 6px; border-bottom-width: 2px; border-right-width: 2px; border-radius: 0 0 0 4px; }
+  .qr-bracket.br { bottom: 6px; left: 6px; border-bottom-width: 2px; border-left-width: 2px; border-radius: 0 0 4px 0; }
+
+  /* Scan instruction */
+  .scan-tip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, rgba(42,107,90,.06), rgba(201,169,110,.06));
+    border: 1px solid rgba(201,169,110,.25);
+    border-radius: 30px;
+    padding: 8px 18px;
+    font-size: .8rem;
+    color: var(--text-mid);
+    font-weight: 400;
+  }
+  .scan-tip .arrow { color: var(--teal); font-size: .9rem; }
+
+  /* Heart footer */
+  .card-footer {
+    text-align: center;
+    padding: 0 32px 26px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--gold);
+    letter-spacing: 1px;
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Print styles */
+  @media print {
+    body { background: white; padding: 0; }
+    .page { gap: 40px; }
+    .card { box-shadow: none; border: 1px solid #ddd; }
+    .card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <span class="header-script">Agam &amp; Janna</span>
+    <span class="header-date">י״ט ניסן תשפ״ו &nbsp;·&nbsp; 19.03.2026</span>
+    <div class="divider"><span>❧</span></div>
+    <p style="font-size:.9rem;color:var(--text-mid);margin-top:12px;font-weight:300;">
+      נשמח אם תבחרו להוסיף לשמחתנו 🎁
+    </p>
+  </div>
+
+  <!-- Card 1: PayBox -->
+  <div class="card" style="animation-delay:.15s">
+    <div class="card-band"></div>
+    <div class="card-body">
+      <div class="app-badge">
+        <div class="app-icon paybox">P</div>
+        <span class="app-name">PayBox</span>
+      </div>
+      <div class="card-title">
+        <h2>שלחו מתנה דרך PayBox</h2>
+        <p>סרקו את הקוד עם מצלמת הטלפון</p>
+      </div>
+      <div class="qr-frame">
+        <div class="qr-bracket tl"></div>
+        <div class="qr-bracket tr"></div>
+        <div class="qr-bracket bl"></div>
+        <div class="qr-bracket br"></div>
+        <div id="qr-paybox"></div>
+      </div>
+    </div>
+    <div class="card-footer">❤ תודה על אהבתכם ❤</div>
+  </div>
+
+  <!-- Card 2: Bit -->
+  <div class="card" style="animation-delay:.3s">
+    <div class="card-band" style="background: linear-gradient(90deg, #ea580c 0%, #f97316 50%, var(--gold) 100%);"></div>
+    <div class="card-body">
+      <div class="app-badge">
+        <div class="app-icon bit">💛</div>
+        <span class="app-name">Bit</span>
+      </div>
+      <div class="card-title">
+        <h2>שלחו מתנה דרך Bit</h2>
+        <p>סרקו את הקוד עם מצלמת הטלפון</p>
+      </div>
+      <div class="qr-frame">
+        <div class="qr-bracket tl"></div>
+        <div class="qr-bracket tr"></div>
+        <div class="qr-bracket bl"></div>
+        <div class="qr-bracket br"></div>
+        <div id="qr-bit"></div>
+      </div>
+    </div>
+    <div class="card-footer">❤ תודה על אהבתכם ❤</div>
+  </div>
+
+</div>
+
+<script>
+  // PayBox QR
+  new QRCode(document.getElementById("qr-paybox"), {
+    text: "https://links.payboxapp.com/GOOOcA6Uy1b",
+    width: 200,
+    height: 200,
+    colorDark: "#1a4a8a",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.H
+  });
+
+  // Bit QR
+  new QRCode(document.getElementById("qr-bit"), {
+    text: "https://www.bitpay.co.il/app/me/40BB0FCA-852F-6719-CFC3-F1FF415EFA68135C",
+    width: 200,
+    height: 200,
+    colorDark: "#b94400",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.H
+  });
+</script>
+</body>
+</html>
