@@ -3,70 +3,31 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>הזמנה לחתונה - יאנה ואגם</title>
+  <title>החתונה של יאנה ואגם</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&family=Secular+One&display=swap" rel="stylesheet">
   <style>
-    body { box-sizing: border-box; -webkit-tap-highlight-color: transparent; touch-action: pan-y; }
+    body { 
+        box-sizing: border-box; 
+        -webkit-tap-highlight-color: transparent;
+        touch-action: pan-y;
+    }
     * { font-family: 'Heebo', sans-serif; }
     .title-font { font-family: 'Secular One', sans-serif; }
-    .envelope-container { perspective: 1000px; z-index: 50; }
     
-    .envelope {
-      position: relative; width: 320px; height: 220px; cursor: pointer;
-      transition: transform 0.3s ease; transform-style: preserve-3d;
+    .sparkle {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      animation: sparkle 2s infinite;
     }
-    .invitation-card {
-      position: absolute; width: 280px; left: 50%; transform: translateX(-50%);
-      bottom: 10px; transition: bottom 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 5; pointer-events: none; 
-    }
-    .envelope.open .invitation-card { bottom: 240px; pointer-events: auto; }
-    @media (min-width: 768px) {
-      .envelope { width: 600px; height: 400px; }
-      .invitation-card { width: 540px; padding: 20px; }
-      .envelope.open .invitation-card { bottom: 450px; }
-      .invitation-card p { font-size: 1.5rem; }
-    }
-    .envelope:hover { transform: scale(1.02); }
-    .envelope-body {
-      position: absolute; width: 100%; height: 100%; border-radius: 12px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-      background: linear-gradient(145deg, #fda4af 0%, #fb7185 100%);
-    }
-    .envelope-flap {
-      position: absolute; top: 0; left: 0; width: 100%; height: 50%;
-      transform-origin: top center; transition: transform 0.6s ease;
-      z-index: 10; clip-path: polygon(0 0, 50% 100%, 100% 0);
-      background: linear-gradient(180deg, #f43f5e 0%, #fb7185 100%);
-      backface-visibility: hidden;
-    }
-    .envelope.open .envelope-flap { transform: rotateX(180deg); z-index: 1;}
-    .heart-seal {
-      position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%);
-      z-index: 15; transition: opacity 0.3s ease;
-    }
-    .envelope.open .heart-seal { opacity: 0; pointer-events: none; }
-    .full-invitation { display: none; opacity: 0; transform: scale(0.95); transition: all 0.5s ease; }
-    .full-invitation.visible { display: block; opacity: 1; transform: scale(1); }
-    
-    .sparkle { position: absolute; width: 5px; height: 5px; border-radius: 50%; animation: sparkle 2s infinite; }
     @keyframes sparkle { 0%, 100% { opacity: 0; transform: scale(0); } 50% { opacity: 1; transform: scale(1); } }
-    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-    .float-animation { animation: float 3s ease-in-out infinite; }
-    @keyframes heartbeat { 0%, 100% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(1.2); } }
-    .heartbeat { animation: heartbeat 1.5s ease-in-out infinite; }
-    .form-input {
-      width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #fbcfe8;
-      border-radius: 8px; background-color: #fff1f2; color: #831843;
-      outline: none; transition: all 0.2s; font-size: 16px; 
-    }
-    .form-input:focus { border-color: #ec4899; background-color: #fff; box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.2); }
   </style>
  </head>
  <body class="h-full overflow-y-auto overflow-x-hidden bg-pink-50">
-  <div id="app-wrapper" class="w-full min-h-screen flex flex-col items-center justify-center p-4" style="background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 50%, #fbcfe8 100%);">
-   
+  <div class="w-full min-h-screen flex flex-col items-center justify-center p-4 md:py-10" style="background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 50%, #fbcfe8 100%);">
+    
    <div class="fixed inset-0 pointer-events-none overflow-hidden">
     <div class="sparkle" style="top: 10%; left: 20%; background: #f472b6; animation-delay: 0s;"></div>
     <div class="sparkle" style="top: 20%; left: 80%; background: #c084fc; animation-delay: 0.5s;"></div>
@@ -74,28 +35,9 @@
     <div class="sparkle" style="top: 30%; left: 90%; background: #fb7185; animation-delay: 0.8s;"></div>
    </div>
 
-   <div id="envelope-section" class="envelope-container flex flex-col items-center mt-10">
-    <p class="text-pink-600 text-xl md:text§-2xl mb-12 font-medium animate-bounce font-bold" style="text-shadow: 1px 1px 0 #fff;">לחצו על המעטפה לפתיחה 💕</p>
-    
-    <div class="envelope float-animation" id="envelope" onclick="openEnvelope()" ontouchstart="openEnvelope()">
-     <div class="envelope-body"></div>
-     <div class="absolute inset-0 rounded-lg overflow-hidden">
-      <div class="absolute bottom-0 left-0 right-0 h-3/4" style="background: linear-gradient(145deg, #ffe4e6 0%, #fecdd3 100%);"></div>
-     </div>
-     <div class="envelope-flap"></div>
-     <div class="heart-seal heartbeat">
-      <svg width="60" height="55" viewbox="0 0 50 45"><defs><lineargradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#fdf2f8" /><stop offset="100%" style="stop-color:#fce7f3" /></lineargradient></defs> <path d="M25 42 C25 42 5 28 5 15 C5 5 15 0 25 10 C35 0 45 5 45 15 C45 28 25 42 25 42Z" fill="url(#heartGradient)" stroke="#fff" stroke-width="2" /></svg>
-     </div>
-     <div class="invitation-card bg-white rounded-lg shadow-lg p-4 text-center flex flex-col justify-end md:justify-center items-center h-48 md:h-64 pb-4 md:pb-0">
-      <p class="text-pink-500 font-bold title-font text-lg md:text-2xl">יאנה ואגם מתחתנות!</p>
-      <div class="w-full h-px bg-pink-200 my-1"></div>
-      <p class="text-pink-400 font-medium md:text-xl">19.03.2026</p>
-     </div>
-    </div>
-   </div>
-
-   <div id="full-invitation" class="full-invitation w-full max-w-2xl mx-auto pb-10">
+   <div class="w-full max-w-2xl mx-auto relative z-10">
     <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border-4 border-pink-200">
+     
      <div class="relative pt-10 pb-6" style="background: linear-gradient(180deg, #fdf2f8 0%, #fff 100%);">
       <svg viewbox="0 0 200 160" class="w-64 h-48 mx-auto transform scale-110">
         <path d="M30 20 C30 20 25 15 25 12 C25 8 30 8 30 12 C30 8 35 8 35 12 C35 15 30 20 30 20Z" fill="#fce7f3" /> <path d="M170 25 C170 25 165 20 165 17 C165 13 170 13 170 17 C170 13 175 13 175 17 C175 20 170 25 170 25Z" fill="#fbcfe8" /> <path d="M45 45 C45 45 42 42 42 40 C42 37 45 37 45 40 C45 37 48 37 48 40 C48 42 45 45 45 45Z" fill="#f9a8d4" /> <path d="M155 50 C155 50 152 47 152 45 C152 42 155 42 155 45 C155 42 158 42 158 45 C158 47 155 50 155 50Z" fill="#f9a8d4" /> 
@@ -106,7 +48,8 @@
      </div>
 
      <div class="px-8 pb-10 text-center">
-      <p class="text-pink-600 text-xl leading-relaxed mb-6 font-medium">נרגשות להזמינכם לחגוג עימנו את אהבתינו בחתונתנו <br> <span class="font-bold text-red-500 text-2xl">ודיר באלק לא תבואו!</span></p>
+      
+      <p class="text-pink-600 text-xl md:text-2xl leading-relaxed mb-6 font-bold">אנחנו שמחות ומתרגשות שאתןם באותים לחגוג איתנו!</p>
       
       <h1 class="title-font text-5xl md:text-6xl mb-0" style="color: #be185d; text-shadow: 2px 2px 4px rgba(244,114,182,0.3);">יאנה ואגם</h1>
       <h2 class="title-font text-3xl md:text-4xl mt-2" style="color: #be185d; text-shadow: 1px 1px 3px rgba(244,114,182,0.3);">גנטמן כהן</h2>
@@ -118,21 +61,6 @@
       <div class="mb-8">
        <p class="text-2xl font-bold text-pink-700">יום חמישי 19/03/2026</p>
        <p class="text-pink-500 text-lg">א' בניסן התשפ"ו</p>
-      </div>
-
-      <div class="bg-gradient-to-r from-pink-50 via-white to-pink-50 rounded-2xl p-6 mb-8 border border-pink-100 shadow-sm flex flex-col items-center">
-         <p class="text-pink-700 font-bold text-xl mb-3">5.91, נתניה</p>
-         
-         <button onclick="navigate()" class="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 mb-2 w-full max-w-xs justify-center cursor-pointer">
-           <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M12.9 22.2c-.2.1-.4.2-.6.2-.7 0-1.3-.3-1.8-.8l-4.2-4.2c-.9-.9-1.4-2.1-1.4-3.4 0-1.1.4-2.2 1.2-3l.1-.1c1.8-1.7 4.9-1.6 6.7.2.9.9 1.4 2.1 1.4 3.3 0 1.2-.5 2.4-1.3 3.3l-.1.1-4.2 4.2c.1 0 .1.1.2.2zM9.5 9.8c-.4.4-.6 1-.6 1.6 0 .6.2 1.1.6 1.5l.1.1c.4.4.9.6 1.5.6s1.1-.2 1.5-.6c.4-.4.6-.9.6-1.5 0-.6-.2-1.2-.6-1.6-.4-.4-.9-.6-1.5-.6s-1.1.2-1.5.5zm8.9 4.3c-1.1-1.2-1.7-2.7-1.7-4.3 0-1.6.6-3.1 1.8-4.3 1.2-1.2 2.7-1.8 4.3-1.8 1.5 0 3.1.6 4.3 1.8 1.1 1.2 1.8 2.7 1.8 4.3 0 1.6-.6 3.1-1.8 4.3-1.2 1.2-2.7 1.8-4.3 1.8-1.6 0-3.1-.6-4.4-1.8zM24 6.7c-.5-.5-1.2-.8-1.9-.8-.7 0-1.4.3-1.9.8-.5.5-.8 1.2-.8 1.9 0-.8-.3-1.4-.8-1.9zM5.3 14.1c-1.1 1.2-1.8 2.7-1.8 4.3 0 1.6.6 3.1 1.8 4.3 1.2 1.2 2.7 1.8 4.3 1.8 1.6 0 3.1-.6 4.3-1.8 1.2-1.2 1.8-2.7 1.8-4.3 0-1.6-.6-3.1-1.8-4.3-1.2-1.2-2.7-1.8-4.3-1.8-1.6 0-3.1.6-4.3 1.8zM8.2 21.2c-.5.5-1.2.8-1.9.8-.7 0-1.4-.3-1.9-.8-.5-.5-.8-1.2-.8 1.9 0-.7.3-1.4.8-1.9.5-.5 1.2-.8 1.9-.8.7 0 1.4.3 1.9.8.5.5.8 1.2.8 1.9 0 .7-.3 1.4-.8 1.9z"/></svg>
-           ניווט עם Waze
-         </button>
-         
-         <a href="https://maps.google.com/?q=5.91+Netanya" target="_blank" class="text-sm text-gray-500 underline mt-2 hover:text-pink-600">
-            או לחצו כאן לניווט ב-Google Maps
-         </a>
-         
-         <p class="text-pink-500 mt-2">🅿️ יש חניה בשפע ליד האולם</p>
       </div>
 
       <div class="flex justify-center gap-12 mb-8">
@@ -150,182 +78,48 @@
        </div>
       </div>
 
-      <div class="bg-gradient-to-r from-purple-50 via-pink-50 to-purple-50 rounded-xl p-5 border border-pink-200 mb-8">
-       <p class="text-pink-600 font-bold text-lg">✨ תבואו עם מלא אנרגיות ומרץ ותתרגשו עימנו ✨</p>
+      <div class="bg-gradient-to-r from-pink-50 via-white to-pink-50 rounded-2xl p-6 mb-8 border border-pink-100 shadow-sm flex flex-col items-center">
+         <p class="text-pink-700 font-bold text-xl mb-3">אולם 5.91, נתניה</p>
+         <button onclick="navigate()" class="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 mb-2 w-full max-w-xs justify-center cursor-pointer">
+           <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M12.9 22.2c-.2.1-.4.2-.6.2-.7 0-1.3-.3-1.8-.8l-4.2-4.2c-.9-.9-1.4-2.1-1.4-3.4 0-1.1.4-2.2 1.2-3l.1-.1c1.8-1.7 4.9-1.6 6.7.2.9.9 1.4 2.1 1.4 3.3 0 1.2-.5 2.4-1.3 3.3l-.1.1-4.2 4.2c.1 0 .1.1.2.2zM9.5 9.8c-.4.4-.6 1-.6 1.6 0 .6.2 1.1.6 1.5l.1.1c.4.4.9.6 1.5.6s1.1-.2 1.5-.6c.4-.4.6-.9.6-1.5 0-.6-.2-1.2-.6-1.6-.4-.4-.9-.6-1.5-.6s-1.1.2-1.5.5zm8.9 4.3c-1.1-1.2-1.7-2.7-1.7-4.3 0-1.6.6-3.1 1.8-4.3 1.2-1.2 2.7-1.8 4.3-1.8 1.5 0 3.1.6 4.3 1.8 1.1 1.2 1.8 2.7 1.8 4.3 0 1.6-.6 3.1-1.8 4.3-1.2 1.2-2.7 1.8-4.3 1.8-1.6 0-3.1-.6-4.4-1.8zM24 6.7c-.5-.5-1.2-.8-1.9-.8-.7 0-1.4.3-1.9.8-.5.5-.8 1.2-.8 1.9 0 .7.3 1.4.8 1.9.5.5 1.2.8 1.9.8.7 0 1.4-.3 1.9-.8.5-.5.8-1.2.8-1.9 0-.8-.3-1.4-.8-1.9zM5.3 14.1c-1.1 1.2-1.8 2.7-1.8 4.3 0 1.6.6 3.1 1.8 4.3 1.2 1.2 2.7 1.8 4.3 1.8 1.6 0 3.1-.6 4.3-1.8 1.2-1.2 1.8-2.7 1.8-4.3 0-1.6-.6-3.1-1.8-4.3-1.2-1.2-2.7-1.8-4.3-1.8-1.6 0-3.1.6-4.3 1.8zM8.2 21.2c-.5.5-1.2.8-1.9.8-.7 0-1.4-.3-1.9-.8-.5-.5-.8-1.2-.8 1.9 0-.7.3-1.4.8-1.9.5-.5 1.2-.8 1.9-.8.7 0 1.4.3 1.9.8.5.5.8 1.2.8 1.9 0 .7-.3 1.4-.8 1.9z"/></svg>
+           ניווט עם Waze
+         </button>
+         <p class="text-pink-500 mt-2">🅿️ יש חניה בשפע</p>
       </div>
 
       <div class="mt-8 pt-8 border-t-2 border-dashed border-pink-200">
-        <h3 class="title-font text-3xl text-pink-700 mb-6">אישור הגעה</h3>
+        <h3 class="title-font text-2xl text-pink-700 mb-2">רוצים לפנק במתנה? 🎁</h3>
+        <p class="text-pink-600 mb-6">למי שמעדיפ/ה להעביר באהבה בקליק:</p>
         
-        <form name="rsvpForm" id="rsvpForm" class="text-right max-w-md mx-auto bg-pink-50 p-6 rounded-2xl shadow-inner">
-          <div class="mb-5">
-            <label class="block text-pink-700 text-md font-bold mb-2 mr-1">שם מלא</label>
-            <input type="text" name="guestName" required placeholder="מי בא לשמח?" class="form-input text-lg">
-          </div>
-          <div class="mb-5">
-            <label class="block text-pink-700 text-md font-bold mb-2 mr-1">האם תגיעו?</label>
-            <select name="attending" onchange="toggleGuestCount(this.value)" required class="form-input text-lg">
-              <option value="" disabled selected>בחרו תשובה...</option>
-              <option value="Yes">ברור, לא מפספסים!</option>
-              <option value="No">לצערי לא נגיע</option>
-            </select>
-          </div>
-         <div id="guestCountGroup" class="mb-5 hidden">
-            <label class="block text-pink-700 text-md font-bold mb-2 mr-1">כמות אורחים (כולל אותך)</label>
-            <select name="guestCount" class="form-input text-lg" required>
-              <option value="" disabled selected>בחרו כמות...</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-            </select>
-          </div>          
-         <div class="mb-8">
-            <label class="block text-pink-700 text-md font-bold mb-2 mr-1">העדפות מזון</label>
-            <select name="dietary" class="form-input text-lg">
-              <option value="None" selected>אוכלת הכל (אין העדפה)</option>
-              <option value="Vegetarian">צמחוני</option>
-              <option value="Vegan">טבעוני</option>
-              <option value="Landa">הכשר לנדא</option> </select>
-          </div>
-          <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold py-4 px-6 rounded-full shadow-lg transform transition hover:scale-105 active:scale-95 text-xl">
-            שליחת אישור הגעה 💌
-          </button>
-        </form>
+        <div class="flex flex-col gap-4 items-center">
 
-        <div id="loading" class="hidden mt-4 text-pink-600 font-bold animate-pulse text-lg">שולח את התשובה... ⏳</div>
-        <div id="successMessage" class="hidden mt-6 bg-green-50 p-6 rounded-xl border border-green-200">
-          <h2 class="text-2xl font-bold text-green-600 mb-2">איזה כיף!</h2>
-          <p class="text-green-700 text-lg">התשובה נרשמה בהצלחה. מחכות לראותכם!</p>
-        </div>
-                <div class="mt-10 pt-8 border-t-2 border-dashed border-pink-200 text-center">
-          <h3 class="title-font text-2xl text-pink-700 mb-4">רוצים לפנק אותנו במתנה? 🎁</h3>
-          <a href="bit-paybox-qr.html" class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-purple-400 to-pink-500 hover:from-purple-500 hover:to-pink-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 text-lg">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-              <path d="M4.5 3.75a3 3 0 00-3 3v.75h21v-.75a3 3 0 00-3-3h-15z" />
-              <path fill-rule="evenodd" d="M22.5 9.75h-21v7.5a3 3 0 003 3h15a3 3 0 003-3v-7.5zm-18 3.75a.75.75 0 01.75-.75h6a.75.75 0 010 1.5h-6a.75.75 0 01-.75-.75zm8.25 0a.75.75 0 01.75-.75h.75a.75.75 0 010 1.5H13.5a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
-            </svg>
-            למעבר לעמוד Bit / PayBox
-          </a>
+            <a href="https://links.payboxapp.com/GOOOcA6Uy1b" target="_blank" class="flex items-center justify-center gap-3 bg-[#0d2a5c] hover:bg-[#0a2046] text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 w-full max-w-xs">
+              <span class="text-xl font-serif italic pr-1">PayBox</span>
+              <span>העברה בפייבוקס</span>
+            </a>
+            
+            <a href="https://www.bitpay.co.il/app/me/40BB0FCA-852F-6719-CFC3-F1FF415EFA68135C" target="_blank" class="flex items-center justify-center gap-3 bg-[#00b0b8] hover:bg-[#009ca3] text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 w-full max-w-xs">
+              <span class="text-xl">Bit</span>
+              <span>העברה בביט</span>
+            </a>
+
         </div>
       </div>
+
      </div>
     </div>
    </div>
   </div>
 
   <script>
-    // **********************************************
-    // שימי כאן את הקישור החדש מגוגל (אחרי שעשית New Deployment)
-    // **********************************************
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxKbKMTecE7_w97xlLNrf0jdakgnivKQsHOsEiMlaJmQO1EG7KgYU31CzOEI7tXrz98/exec';
-
-    let isOpen = false;
-
     function navigate() {
         const wazeWebUrl = "https://waze.com/ul?q=5.91+Netanya&navigate=yes";
         const wazeAppUrl = "waze://?q=5.91+Netanya&navigate=yes";
         
+        // מנסה לפתוח את האפליקציה, ואם לא מצליח עובר לגרסת הדפדפן
         setTimeout(function () { window.location = wazeWebUrl; }, 1000);
         window.location = wazeAppUrl;
     }
-
-
-    function openEnvelope() {
-      if (isOpen) return;
-      isOpen = true;
-      const envelope = document.getElementById('envelope');
-      envelope.classList.add('open');
-      setTimeout(() => {
-        document.getElementById('envelope-section').style.display = 'none';
-        const invitation = document.getElementById('full-invitation');
-        invitation.classList.add('visible');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 800);
-    }
-
-    function toggleGuestCount(val) {
-      const guestInputGroup = document.getElementById('guestCountGroup');
-      const countSelect = guestInputGroup.querySelector('select');
-      const dietaryContainer = document.getElementById('dietaryContainer');
-      
-      if (val === 'Yes') {
-        guestInputGroup.classList.remove('hidden');
-        countSelect.required = true;
-        countSelect.value = ""; // מאפס לברירת המחדל "בחרו כמות"
-        dietaryContainer.innerHTML = ''; // מנקה את העדפות המזון עד שיבחרו מספר
-      } else {
-        guestInputGroup.classList.add('hidden');
-        countSelect.required = false;
-        countSelect.value = "";
-        dietaryContainer.innerHTML = '';
-      }
-    }
-
-    function updateDietaryInputs(count) {
-      const container = document.getElementById('dietaryContainer');
-      if (!count) {
-        container.innerHTML = '';
-        return;
-      }
-      
-      container.innerHTML = '<label class="block text-pink-700 text-md font-bold mb-3 mr-1">העדפות מזון לכל אורח:</label>';
-      
-      for (let i = 1; i <= count; i++) {
-        const labelText = count > 1 ? `אורח ${i}:` : `העדפת מזון:`;
-        const html = `
-          <div class="mb-3 flex items-center gap-2">
-            <span class="text-pink-600 font-medium text-sm w-16">${labelText}</span>
-            <select name="dietary_${i}" class="form-input text-base py-2" required>
-              <option value="None" selected>אוכל/ת הכל</option>
-              <option value="Vegetarian">צמחוני/ת</option>
-              <option value="Vegan">טבעוני/ת</option>
-              <option value="Landa">הכשר לנדא</option>
-            </select>
-          </div>
-        `;
-        container.insertAdjacentHTML('beforeend', html);
-      }
-    }
-
-    // שינוי ה-EventListener שיעבוד עם ה-Dropdown (אירוע change במקום input)
-    document.querySelector('select[name="guestCount"]').addEventListener('change', function(e) {
-      updateDietaryInputs(parseInt(e.target.value));
-    });
-
-    const form = document.forms['rsvpForm'];
-    
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      
-      // החלפת כפתור השליחה באנימציית טעינה
-      document.getElementById('submitBtn').classList.add('hidden');
-      document.getElementById('loading').classList.remove('hidden');
-      
-      // שליחה לגוגל במצב no-cors (עוקף חסימות דפדפן)
-      fetch(scriptURL, { 
-          method: 'POST', 
-          body: new FormData(form),
-          mode: 'no-cors' // <--- זה התיקון הקריטי!
-      })
-      .then(() => {
-          // בגלל no-cors אנחנו מניחים שהשליחה הצליחה
-          document.getElementById('loading').classList.add('hidden');
-          document.getElementById('rsvpForm').classList.add('hidden'); // מסתיר את הטופס
-          document.getElementById('successMessage').classList.remove('hidden'); // מציג תודה
-      })
-      .catch(error => {
-          console.error('Error!', error.message);
-          alert('הייתה בעיה בשליחה, נסו שוב או שלחו הודעה לאגם/יאנה');
-          document.getElementById('loading').classList.add('hidden');
-          document.getElementById('submitBtn').classList.remove('hidden');
-      });
-    });
-  </script> 
+  </script>
  </body>
 </html>
